@@ -27,7 +27,7 @@ Great! Here's the full `README.md` content you can **copy all at once** 👇
 
 ## 🌐 Live Demo
 
-👉 [https://todo-list-e7ej.onrender.com/api/users/register](https://todo-list-e7ej.onrender.com/api/users/register)
+👉 [https://todo-list-e7ej.onrender.com/api/users/register](https://todolist-restapi-s.onrender.com/)
 
 ---
 
