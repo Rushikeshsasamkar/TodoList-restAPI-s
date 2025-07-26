@@ -65,19 +65,3 @@ Great! Here's the full `README.md` content you can **copy all at once** 👇
 
 ---
 
-## 🔐 Auth Note
-
-To access task list or task routes, **include the bearer token** in the header:
-
-```
-Authorization: Bearer <your_jwt_token>
-```
-
-```
-
----
-
-✅ You can now paste this directly into your `README.md` file.
-
-Let me know if you'd like to add Postman collection info, screenshots, or API example responses too.
-```
