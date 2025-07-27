@@ -1,5 +1,3 @@
-Great! Here's the full `README.md` content you can **copy all at once** 👇
-
 ---
 
 ````markdown
