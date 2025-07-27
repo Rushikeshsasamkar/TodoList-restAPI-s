@@ -5,27 +5,57 @@ import TaskList from '../models/taskList.js';
 import Task from '../models/task.js';
 
 //middleware function to check athentication
+// const authMiddleware = async (req, res, next) => {
+//     try {
+
+//         const token = req.header('Authorization').replace('Bearer ', '');
+
+//         console.log('Raw Authorization Header::Parsed', token);
+
+//         console.log('process.env.JWT_SECRET:: debug', process.env.JWT_SECRET);
+        
+//         // get user id from jwt
+//         const userId = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+
+//         // get user from database and pass user data to request body
+//         req.user = await User.findOne({ _id: userId, 'tokens.token': token });
+//         next();
+
+//     } catch (error) {
+//         console.log(error);
+//         res.status(401).send({ message: 'Unauthorized' });
+//     }
+// }
+
 const authMiddleware = async (req, res, next) => {
     try {
+        const authHeader = req.header('Authorization');
+        if (!authHeader) throw new Error('Authorization header missing');
 
-        const token = req.header('Authorization').replace('Bearer ', '');
+        const token = authHeader.replace('Bearer ', '').trim();
 
         console.log('Raw Authorization Header::Parsed', token);
-
         console.log('process.env.JWT_SECRET:: debug', process.env.JWT_SECRET);
+
+        const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET);
         
-        // get user id from jwt
-        const userId = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+        // decoded should contain _id if you signed JWT like { _id: user._id }
+        const user = await User.findById(decoded._id);
+        if (!user) throw new Error('User not found');
 
-        // get user from database and pass user data to request body
-        req.user = await User.findOne({ _id: userId, 'tokens.token': token });
+        // Optional: if you're storing tokens array on user
+        // const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
+
+        req.user = user;
+        req.token = token;
+
         next();
-
     } catch (error) {
         console.log(error);
         res.status(401).send({ message: 'Unauthorized' });
     }
-}
+};
+
 
 
 
